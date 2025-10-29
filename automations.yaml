@@ -1,0 +1,7 @@
+automation:
+  - alias: "Plex Movie Night"
+    trigger:
+      - platform: state
+        entity_id: input_button.plex_movie_night_button
+    action:
+      - service: script.plex_movie_night

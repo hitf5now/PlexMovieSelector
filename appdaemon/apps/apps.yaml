@@ -1,0 +1,6 @@
+
+plex_updater:
+  module: plex_updater
+  class: PlexUpdater
+  plex_url: YOUR_PLEX_URL
+  plex_token: YOUR_PLEX_TOKEN

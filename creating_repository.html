@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creating Your HACS-Compliant Repository</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        .folder-structure {
+            background-color: #eef;
+            padding: 15px;
+            border-left: 3px solid #55a;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Creating Your HACS-Compliant Repository</h1>
+
+        <h2>Introduction</h2>
+        <p>To make your Home Assistant project easily installable via HACS (Home Assistant Community Store), your Git repository needs to follow a specific structure. This guide will walk you through setting up your repository correctly.</p>
+
+        <h2>Prerequisites</h2>
+        <ul>
+            <li>A Git client installed on your computer.</li>
+            <li>An account on a Git hosting service (e.g., GitHub, GitLab, Bitbucket).</li>
+        </ul>
+
+        <h2>Step 1: Initialize Your Git Repository</h2>
+        <p>First, create a new empty directory on your computer for your project. Then, open your terminal or command prompt, navigate to that directory, and initialize a new Git repository:</p>
+        <pre><code>mkdir plex-movie-selector-hacs
+cd plex-movie-selector-hacs
+git init</code></pre>
+
+        <h2>Step 2: Create the Required Directory Structure</h2>
+        <p>HACS expects specific folders for AppDaemon apps and Python scripts. Create these directories within your new repository:</p>
+        <pre><code>mkdir -p appdaemon/apps
+mkdir -p python_scripts</code></pre>
+
+        <h2>Step 3: Place Your Project Files</h2>
+        <p>Now, place the project files into their correct locations within your newly created repository structure:</p>
+        <ul>
+            <li>Move <code>plex_updater.py</code> into <code>appdaemon/apps/</code></li>
+            <li>Move <code>apps.yaml</code> into <code>appdaemon/apps/</code></li>
+            <li>Move <code>plex_movie_selector.py</code> into <code>python_scripts/</code></li>
+            <li>Place <code>hacs.json</code> at the root of your repository.</li>
+            <li>Place <code>automations.yaml</code> at the root of your repository.</li>
+            <li>Place <code>configuration.yaml</code> at the root of your repository.</li>
+            <li>Place <code>scripts.yaml</code> at the root of your repository.</li>
+            <li>Place <code>deployment_guide.html</code> at the root of your repository.</li>
+            <li>Place <code>user_guide.html</code> at the root of your repository.</li>
+            <li>Place <code>GEMINI.md</code> at the root of your repository.</li>
+        </ul>
+
+        <h2>Step 4: Add, Commit, and Push to Your Remote Repository</h2>
+        <p>Once all files are in place, add them to your Git repository, commit the changes, and push them to your chosen Git hosting service (e.g., GitHub). Remember to create an empty repository on your hosting service first and link it.</p>
+        <pre><code>git add .
+git commit -m "Initial commit of HACS-compliant Plex Movie Selector"
+git branch -M main
+git remote add origin [YOUR_REMOTE_REPOSITORY_URL]
+git push -u origin main</code></pre>
+        <p>Replace <code>[YOUR_REMOTE_REPOSITORY_URL]</code> with the actual URL of your remote repository (e.g., <code>https://github.com/your_username/plex-movie-selector.git</code>).</p>
+
+        <h2>Example Repository Structure</h2>
+        <p>After following these steps, your repository structure should look like this:</p>
+        <div class="folder-structure">
+            <code>
+            your_repository_name/<br>
+            ├── hacs.json<br>
+            ├── appdaemon/<br>
+            │   └── apps/<br>
+            │       ├── plex_updater.py<br>
+            │       └── apps.yaml<br>
+            ├── python_scripts/<br>
+            │   └── plex_movie_selector.py<br>
+            ├── automations.yaml<br>
+            ├── configuration.yaml<br>
+            ├── scripts.yaml<br>
+            ├── deployment_guide.html<br>
+            ├── user_guide.html<br>
+            └── GEMINI.md
+            </code>
+        </div>
+
+        <p>Now your repository is ready to be added as a custom repository in HACS!</p>
+
+    </div>
+</body>
+</html>

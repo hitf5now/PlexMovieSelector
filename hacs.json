@@ -1,0 +1,6 @@
+{
+  "name": "Plex Movie Selector",
+  "render_readme": true,
+  "appdaemon": "plex_updater",
+  "python_script": "plex_movie_selector"
+}

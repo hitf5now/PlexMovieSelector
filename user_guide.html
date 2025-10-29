@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plex Movie Selector User Guide</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Plex Movie Selector User Guide</h1>
+
+        <h2>Introduction</h2>
+        <p>This guide will explain how to use the Plex Movie Selector functionality in Home Assistant to select a random movie from your Plex library.</p>
+
+        <h2>How to Use</h2>
+        <p>To use the Plex Movie Selector, you will interact with the helpers you created in Home Assistant:</p>
+        <ul>
+            <li><strong>Genre</strong>: Select a genre from the <code>Plex Movie Genre</code> dropdown.</li>
+            <li><strong>Decade</strong>: Select a decade from the <code>Plex Movie Decade</code> dropdown.</li>
+            <li><strong>Director</strong>: Select a director from the <code>Plex Movie Director</code> dropdown.</li>
+            <li><strong>Actor</strong>: Select an actor from the <code>Plex Movie Actor</code> dropdown.</li>
+            <li><strong>Use Last Played Actors</strong>: Toggle the <code>Plex Use Last Played Actors</code> switch to enable/disable filtering by actors from your last played movie.</li>
+            <li><strong>Collection</strong>: Select a collection from the <code>Plex Movie Collection</code> dropdown.</li>
+            <li><strong>Content Rating</strong>: Select a content rating from the <code>Plex Movie Content Rating</code> dropdown.</li>
+            <li><strong>Button</strong>: Press the <code>Plex Movie Night Button</code> to select and play a random movie based on your chosen criteria.</li>
+        </ul>
+
+        <h2>Example</h2>
+        <p>Here is an example of how to select a random movie:</p>
+        <ol>
+            <li>Select "Action" from the <code>Plex Movie Genre</code> dropdown.</li>
+            <li>Select "1980" from the <code>Plex Movie Decade</code> dropdown.</li>
+            <li>Select "Steven Spielberg" from the <code>Plex Movie Director</code> dropdown.</li>
+            <li>Select "Harrison Ford" from the <code>Plex Movie Actor</code> dropdown.</li>
+            <li>Turn on the <code>Plex Use Last Played Actors</code> toggle.</li>
+            <li>Select "Indiana Jones" from the <code>Plex Movie Collection</code> dropdown.</li>
+            <li>Select "PG" from the <code>Plex Movie Content Rating</code> dropdown.</li>
+            <li>Press the <code>Plex Movie Night Button</code>.</li>
+        </ol>
+        <p>The system will then select a random, unwatched Action movie from the 1980s, directed by Steven Spielberg, starring Harrison Ford, from the Indiana Jones collection, with a content rating of PG, and also including at least one actor from the last movie you played. This movie will then start playing on your configured Plex client.</p>
+
+    </div>
+</body>
+</html>

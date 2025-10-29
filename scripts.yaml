@@ -1,0 +1,14 @@
+
+plex_movie_night:
+  alias: Plex Movie Night
+  sequence:
+    - service: python_script.plex_movie_selector
+      data_template:
+        genre: "{{ states('input_select.plex_movie_genre') }}"
+        decade: "{{ states('input_select.plex_movie_decade') }}"
+        director: "{{ states('input_text.plex_movie_director') }}"
+        actor: "{{ states('input_text.plex_movie_actor') }}"
+        use_last_played_actors: "{{ states('input_boolean.plex_use_last_played_actors') }}"
+        collection: "{{ states('input_text.plex_movie_collection') }}"
+        content_rating: "{{ states('input_select.plex_movie_content_rating') }}"
+        client_name: "{{ states('input_select.plex_client_selector') }}"

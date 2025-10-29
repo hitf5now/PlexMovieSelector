@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plex Movie Selector Installation Guide</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Plex Movie Selector Installation Guide</h1>
+
+        <h2>Introduction</h2>
+        <p>This guide will walk you through the process of installing the Plex Movie Selector functionality in Home Assistant. This will allow you to select a random movie from your Plex library based on various criteria.</p>
+
+        <h2>Prerequisites</h2>
+        <ul>
+            <li>A working Plex Media Server.</li>
+            <li>A working Home Assistant installation.</li>
+            <li><a href="https://hacs.xyz/">Home Assistant Community Store (HACS)</a> installed and configured.</li>
+            <li>SSH access to your Home Assistant server (or the ability to edit the configuration files).</li>
+        </ul>
+
+        <h2>Step 0: Install AppDaemon</h2>
+        <p>If you don't already have AppDaemon installed, you'll need to add it to your Home Assistant setup.</p>
+        <h3>For Home Assistant OS/Supervised (Add-on)</h3>
+        <ol>
+            <li>In Home Assistant, navigate to <strong>Settings > Add-ons</strong>.</li>
+            <li>Click on the <strong>Add-on Store</strong> button in the bottom right corner.</li>
+            <li>Search for "AppDaemon" and select the official add-on.</li>
+            <li>Click <strong>Install</strong> and wait for the installation to complete.</li>
+            <li>After installation, go to the <strong>Configuration</strong> tab of the AppDaemon add-on.
+                <ul>
+                    <li>Ensure <code>log_level</code> is set to <code>info</code> or <code>debug</code> for easier troubleshooting.</li>
+                    <li>You might need to enable <code>ssl</code> if your Home Assistant uses HTTPS (and provide certificate paths).</li>
+                </ul>
+            </li>
+            <li>Go to the <strong>Info</strong> tab and enable <strong>Start on boot</strong> and <strong>Show in sidebar</strong>.</li>
+            <li>Click <strong>Start</strong> to run the AppDaemon add-on.</li>
+        </ol>
+        <h3>For Home Assistant Core (Manual Installation)</h3>
+        <p>If you are running Home Assistant Core in a different environment, you will need to install AppDaemon manually. Refer to the <a href="https://appdaemon.readthedocs.io/en/latest/INSTALL.html">AppDaemon documentation</a> for detailed instructions.</p>
+
+        <h2>Step 1: Add to HACS</h2>
+        <ol>
+            <li>Open Home Assistant and navigate to HACS.</li>
+            <li>Go to <strong>AppDaemon</strong> (not Integrations).</li>
+            <li>Click on the three dots in the top right corner and select <strong>Custom repositories</strong>.</li>
+            <li>Add the URL of this Git repository (where these files are hosted) as a new repository.
+                <ul>
+                    <li><strong>Repository URL</strong>: <code>[YOUR_REPOSITORY_URL]</code> (e.g., <code>https://github.com/your_username/plex-movie-selector</code>)</li>
+                    <li><strong>Category</strong>: Select <code>AppDaemon</code> (this option should now be available).</li>
+                </ul>
+            </li>
+            <li>Close the custom repositories dialog.</li>
+            <li>Search for "Plex Movie Selector" in HACS and install it.</li>
+            <li>HACS will place the AppDaemon app and Python script in the correct locations.</li>
+        </ol>
+
+        <h2>Step 2: Configuration</h2>
+        <h3><code>appdaemon/apps/apps.yaml</code></h3>
+        <p>Edit the <code>apps.yaml</code> file (located in your AppDaemon's <code>apps</code> directory, e.g., <code>/config/appdaemon/apps/apps.yaml</code>) and replace the placeholder values with your Plex server details:</p>
+        <pre><code>plex_updater:
+  module: plex_updater
+  class: PlexUpdater
+  plex_url: YOUR_PLEX_URL
+  plex_token: YOUR_PLEX_TOKEN</code></pre>
+        <p>Replace <code>YOUR_PLEX_URL</code> and <code>YOUR_PLEX_TOKEN</code> with your Plex server URL and authentication token.</p>
+
+        <h2>Step 3: Home Assistant Configuration</h2>
+        <p>Ensure your Home Assistant <code>configuration.yaml</code> includes the necessary lines for scripts and automations. If you don't have them, add these lines:</p>
+        <pre><code>script: !include scripts.yaml
+automation: !include automations.yaml
+python_script:</code></pre>
+        <h3><code>automations.yaml</code></h3>
+        <p>Add the following automation to your <code>automations.yaml</code> file:</p>
+        <pre><code>automation:
+  - alias: "Plex Movie Night"
+    trigger:
+      - platform: state
+        entity_id: input_button.plex_movie_night_button
+    action:
+      - service: script.plex_movie_night</code></pre>
+
+        <h2>Step 4: Create Home Assistant Helpers</h2>
+        <p>You will need to create the following helpers in Home Assistant (via <strong>Configuration -> Helpers -> + Add Helper</strong>):</p>
+        <ul>
+            <li><strong>Button</strong>: Name it <code>Plex Movie Night Button</code> (<code>input_button.plex_movie_night_button</code>).</li>
+            <li><strong>Dropdown</strong>: Name it <code>Plex Movie Genre</code> (<code>input_select.plex_movie_genre</code>). Leave options blank; AppDaemon will populate them.</li>
+            <li><strong>Dropdown</strong>: Name it <code>Plex Movie Decade</code> (<code>input_select.plex_movie_decade</code>). Leave options blank; AppDaemon will populate them.</li>
+            <li><strong>Dropdown</strong>: Name it <code>Plex Movie Director</code> (<code>input_select.plex_movie_director</code>). Leave options blank; AppDaemon will populate them.</li>
+            <li><strong>Dropdown</strong>: Name it <code>Plex Movie Actor</code> (<code>input_select.plex_movie_actor</code>). Leave options blank; AppDaemon will populate them.</li>
+            <li><strong>Toggle</strong>: Name it <code>Plex Use Last Played Actors</code> (<code>input_boolean.plex_use_last_played_actors</code>).</li>
+            <li><strong>Dropdown</strong>: Name it <code>Plex Movie Collection</code> (<code>input_select.plex_movie_collection</code>). Leave options blank; AppDaemon will populate them.</li>
+            <li><strong>Dropdown</strong>: Name it <code>Plex Movie Content Rating</code> (<code>input_select.plex_movie_content_rating</code>). Leave options blank; AppDaemon will populate them.</li>
+            <li><strong>Dropdown</strong>: Name it <code>Plex Client Selector</code> (<code>input_select.plex_client_selector</code>). Leave options blank; AppDaemon will populate them with active Plex clients.</li>
+        </ul>
+
+        <h2>Step 5: Install Python Dependencies</h2>
+        <p>For AppDaemon to function correctly, you need to install the <code>plexapi</code> Python library. Access the terminal for your AppDaemon environment and run:</p>
+        <pre><code>pip install plexapi</code></pre>
+
+        <h2>Step 6: Restart Services</h2>
+        <ol>
+            <li><strong>Restart AppDaemon</strong>: Restart your AppDaemon addon/service to load the new app and its dependencies.</li>
+            <li><strong>Restart Home Assistant</strong>: Restart your Home Assistant instance to apply all configuration changes.</li>
+        </ol>
+
+    </div>
+</body>
+</html>
